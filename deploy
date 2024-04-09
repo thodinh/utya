@@ -1,0 +1,23 @@
+#!/bin/bash
+
+yarn build
+
+# Define your build directory (replace "dist" with your actual build directory)
+BUILD_DIR="dist"
+
+# Check if the build directory exists
+if [ ! -d "$BUILD_DIR" ]; then
+  echo "Build directory '$BUILD_DIR' not found. Please make sure the directory exists and contains your built files."
+  exit 1
+fi
+
+# Commit the changes
+echo "Committing changes..."
+git add $BUILD_DIR
+git commit -m "Deploying $BUILD_DIR to GitHub Pages"
+
+# Push changes to gh-pages branch
+echo "Pushing changes to GitHub Pages..."
+git subtree push --prefix $BUILD_DIR origin gh-pages
+
+echo "Deployment complete."
